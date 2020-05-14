@@ -1,25 +1,18 @@
 package com.example.evinochallenge.presenter
 
-import com.example.evinochallenge.entity.ChuckFact
-import com.example.evinochallenge.view.ActivityPadrao
+import com.example.evinochallenge.entity.Top
+import com.example.evinochallenge.view.StandardActivity
 
 class Presenter {
 
-    lateinit var activity: ActivityPadrao
+    lateinit var activity: StandardActivity
 
-    fun exibirErro(resposta: String?) {
-        activity.exibirErro(resposta)
+    fun error(resposta: String?) {
+        activity.error(resposta)
     }
 
-    fun exibirResultado(resposta: ChuckFact) {
-        activity.exibirResultado(resposta)
+    fun results(resposta: List<Top>) {
+        activity.results(resposta)
     }
 
-    fun exibirResultados(resposta: List<ChuckFact>) {
-        activity.listarRespostas(resposta)
-    }
-
-    fun exibirCategorias(resposta: List<String>) {
-        activity.listarCategorias(resposta)
-    }
 }

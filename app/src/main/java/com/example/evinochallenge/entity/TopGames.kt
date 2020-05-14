@@ -5,9 +5,10 @@ import com.fasterxml.jackson.annotation.JsonProperty
 import java.io.Serializable
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-data class ChuckFacts(
-    @JsonProperty("result")
-    var result: List<ChuckFact>,
-    @JsonProperty("total")
+data class TopGames(
+    @JsonProperty("top")
+    var result: List<Top>,
+
+    @JsonProperty("_total")
     var total: Double
 ) : Serializable

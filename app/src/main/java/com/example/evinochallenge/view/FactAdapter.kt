@@ -8,14 +8,14 @@ import android.view.animation.AnimationUtils
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.evinochallenge.R
-import com.example.evinochallenge.entity.ChuckFact
+import com.example.evinochallenge.entity.Top
 import kotlinx.android.synthetic.main.item_chuck_fact.view.*
 
 
 class FactAdapter(
-    val items: ArrayList<ChuckFact>,
+    val items: ArrayList<Top>,
     val context: Context,
-    val clickListener: (ChuckFact) -> Unit
+    val clickListener: (Top) -> Unit
 ) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -39,20 +39,9 @@ class FactAdapter(
 
     class FactViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val itemVieww = view
-        fun bind(part: ChuckFact, clickListener: (ChuckFact) -> Unit) {
+        fun bind(part: Top, clickListener: (Top) -> Unit) {
 
-            if (part.value.length > 80) {
-                itemVieww.tv_frase_item_chuck_fact.textSize = 20F
-            } else {
-                itemVieww.tv_frase_item_chuck_fact.textSize = 30F
-            }
-
-            itemVieww.tv_frase_item_chuck_fact.text = part.value
-
-            if (part.categories.size > 0)
-                itemVieww.bt_category_item_chuck_fact.text = part.categories[0]
-            else
-                itemVieww.bt_category_item_chuck_fact.text = "UNCATEGORIZED"
+            itemVieww.tv_frase_item_chuck_fact.text = part.game.localized_name
 
             val layout: CardView = itemVieww.cv_card
 

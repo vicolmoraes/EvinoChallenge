@@ -7,12 +7,12 @@ import retrofit2.converter.jackson.JacksonConverterFactory
 
 class RetrofitConfig {
     private val retrofit = Retrofit.Builder()
-        .baseUrl("https://api.chucknorris.io/jokes/")
+        .baseUrl("https://api.twitch.tv/kraken/games/")
         .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
         .addConverterFactory(JacksonConverterFactory.create())
         .build()
 
-    fun buildingService(): ChuckServices {
-        return retrofit.create(ChuckServices::class.java)
+    fun buildingService(): TwitchServices {
+        return retrofit.create(TwitchServices::class.java)
     }
 }

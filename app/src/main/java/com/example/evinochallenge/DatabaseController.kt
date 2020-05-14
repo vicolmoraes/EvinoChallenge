@@ -6,13 +6,13 @@ import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 
 
-class BancoController(var baseContext: Context) {
+class DatabaseController(var baseContext: Context) {
 
     private lateinit var db: SQLiteDatabase
-    private lateinit var banco: CriaBanco
+    private lateinit var banco: CreateDatabase
     private lateinit var contexto: Context
     fun iniciar() {
-        banco = CriaBanco(baseContext)
+        banco = CreateDatabase(baseContext)
         contexto = baseContext
     }
 
@@ -26,8 +26,8 @@ class BancoController(var baseContext: Context) {
         val resultado: Long
         db = banco.writableDatabase
         valores = ContentValues()
-        valores.put(CriaBanco.TITULO, titulo)
-        resultado = db.insert(CriaBanco.TABELA_CATEGORIA, null, valores)
+        valores.put(CreateDatabase.TITULO, titulo)
+        resultado = db.insert(CreateDatabase.TABELA_CATEGORIA, null, valores)
         db.close()
         return if (resultado == -1L) "Erro ao inserir registro" else {
             "Registro Inserido com sucesso "
@@ -37,15 +37,16 @@ class BancoController(var baseContext: Context) {
     fun carregaDadosCategoria(): Cursor {
         val cursor: Cursor?
         val campos = arrayOf(
-            CriaBanco.ID,
-            CriaBanco.TITULO
+            CreateDatabase.ID,
+            CreateDatabase.TITULO
         )
 
         db = banco.readableDatabase
         if (!banco.doesDatabaseExist(contexto)) {
             banco.onCreate(db)
         }
-        cursor = db.query(CriaBanco.TABELA_CATEGORIA, campos, null, null, null, null, null, null)
+        cursor =
+            db.query(CreateDatabase.TABELA_CATEGORIA, campos, null, null, null, null, null, null)
         if (cursor != null) {
             cursor.moveToFirst()
         }
@@ -82,17 +83,17 @@ class BancoController(var baseContext: Context) {
         val valores: ContentValues
         val where: String
         db = banco.writableDatabase
-        where = CriaBanco.ID + "=" + id
+        where = CreateDatabase.ID + "=" + id
         valores = ContentValues()
-        valores.put(CriaBanco.TITULO, titulo)
-        db.update(CriaBanco.TABELA_CATEGORIA, valores, where, null)
+        valores.put(CreateDatabase.TITULO, titulo)
+        db.update(CreateDatabase.TABELA_CATEGORIA, valores, where, null)
         db.close()
     }
 
     fun deletaRegistroCategoria(id: Int) {
-        val where = CriaBanco.ID + " = " + id
+        val where = CreateDatabase.ID + " = " + id
         db = banco.readableDatabase
-        db.delete(CriaBanco.TABELA_CATEGORIA, where, null)
+        db.delete(CreateDatabase.TABELA_CATEGORIA, where, null)
         db.close()
     }
 
@@ -101,8 +102,8 @@ class BancoController(var baseContext: Context) {
         val resultado: Long
         db = banco!!.writableDatabase
         valores = ContentValues()
-        valores.put(CriaBanco.TITULO, titulo)
-        resultado = db.insert(CriaBanco.TABELA_SUGESTAO, null, valores)
+        valores.put(CreateDatabase.TITULO, titulo)
+        resultado = db.insert(CreateDatabase.TABELA_SUGESTAO, null, valores)
         db.close()
         return if (resultado == -1L) "Erro ao inserir registro" else {
             "Registro Inserido com sucesso "
@@ -112,14 +113,15 @@ class BancoController(var baseContext: Context) {
     fun carregaDadosSugestao(): Cursor {
         val cursor: Cursor?
         val campos = arrayOf(
-            CriaBanco.ID,
-            CriaBanco.TITULO
+            CreateDatabase.ID,
+            CreateDatabase.TITULO
         )
         db = banco.readableDatabase
         if (!banco.doesDatabaseExist(contexto)) {
             banco.onCreate(db)
         }
-        cursor = db.query(CriaBanco.TABELA_SUGESTAO, campos, null, null, null, null, null, null)
+        cursor =
+            db.query(CreateDatabase.TABELA_SUGESTAO, campos, null, null, null, null, null, null)
         if (cursor != null) {
             cursor.moveToFirst()
         }
@@ -133,17 +135,17 @@ class BancoController(var baseContext: Context) {
         val valores: ContentValues
         val where: String
         db = banco.writableDatabase
-        where = CriaBanco.TITULO + "=" + titulo
+        where = CreateDatabase.TITULO + "=" + titulo
         valores = ContentValues()
-        valores.put(CriaBanco.TITULO, titulo)
-        db.update(CriaBanco.TABELA_SUGESTAO, valores, where, null)
+        valores.put(CreateDatabase.TITULO, titulo)
+        db.update(CreateDatabase.TABELA_SUGESTAO, valores, where, null)
         db.close()
     }
 
     fun deletaRegistroSugestao(id: Int) {
-        val where = CriaBanco.ID + " = " + id
+        val where = CreateDatabase.ID + " = " + id
         db = banco.readableDatabase
-        db.delete(CriaBanco.TABELA_SUGESTAO, where, null)
+        db.delete(CreateDatabase.TABELA_SUGESTAO, where, null)
         db.close()
     }
 }

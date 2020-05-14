@@ -6,7 +6,7 @@ import android.database.sqlite.SQLiteOpenHelper
 import java.io.File
 
 
-class CriaBanco internal constructor(context: Context?) :
+class CreateDatabase internal constructor(context: Context?) :
     SQLiteOpenHelper(context, NOME_BANCO, null, VERSAO) {
     var db: SQLiteDatabase? = null
     override fun onCreate(db: SQLiteDatabase) {
