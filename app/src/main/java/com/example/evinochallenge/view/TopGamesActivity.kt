@@ -18,7 +18,7 @@ import kotlinx.android.synthetic.main.activity_search.*
 import java.io.Serializable
 
 
-class SearchActivity : AppCompatActivity(),
+class TopGamesActivity : AppCompatActivity(),
     StandardActivity {
     lateinit var rvResults: RecyclerView
     lateinit var crud: DatabaseController
@@ -41,7 +41,6 @@ class SearchActivity : AppCompatActivity(),
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menu?.removeItem(R.id.item_add)
         menuInflater.inflate(R.menu.menu, menu)
         return true
     }
@@ -83,7 +82,7 @@ class SearchActivity : AppCompatActivity(),
     private fun setRecycler(gamesList: ArrayList<Top?>) {
         rvResults = rv_results_activity_search
         rvResults.adapter =
-            FactAdapter(gamesList, this, { partItem: Top? -> partItemClicked(partItem) })
+            GameAdapter(gamesList, this, { partItem: Top? -> partItemClicked(partItem) })
     }
 
     private fun partItemClicked(game: Top?) {

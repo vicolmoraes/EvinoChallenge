@@ -47,7 +47,7 @@ class RegisterActivity : AppCompatActivity(),
                     ).show()
                 } catch (e: Exception) {
                     crud.insereUsuario(etLogin.text.toString(), etPass.text.toString())
-                    val intent = Intent(this, SearchActivity::class.java)
+                    val intent = Intent(this, TopGamesActivity::class.java)
                     intent.putExtra(
                         "USER",
                         crud.carregaUsuario(etLogin.text.toString(), null) as Serializable

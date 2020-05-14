@@ -1,6 +1,7 @@
 package com.example.evinochallenge.view
 
 import android.content.Context
+import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,10 +10,11 @@ import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.evinochallenge.R
 import com.example.evinochallenge.entity.Top
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.item_game.view.*
 
 
-class FactAdapter(
+class GameAdapter(
     val items: ArrayList<Top?>,
     val context: Context,
     val clickListener: (Top?) -> Unit
@@ -41,7 +43,9 @@ class FactAdapter(
         val itemVieww = view
         fun bind(part: Top?, clickListener: (Top?) -> Unit) {
 
-            itemVieww.tv_frase_item_chuck_fact.text = part?.game?.localized_name
+            itemVieww.tv_item_game_name.text = part?.game?.localized_name
+
+            Picasso.get().load(part?.game?.box?.small).into(itemVieww.iv_item_game_box)
 
             val layout: CardView = itemVieww.cv_card
 
@@ -53,7 +57,12 @@ class FactAdapter(
             animZoomin.startOffset = x.toLong()
             layout.setAnimation(animZoomin)
 
-            itemVieww.ib_item_game_fav.setOnClickListener { clickListener(part) }
+            itemVieww.ib_item_game_fav.setOnClickListener {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    itemVieww.ib_item_game_fav.setBackgroundResource(R.drawable.ic_fav_red)
+                }
+                clickListener(part)
+            }
         }
 
     }

@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:padding="@dimen/margin_16"
     android:id="@+id/cl_activity_search"
-    tools:context=".view.SearchActivity">
+    tools:context=".view.TopGamesActivity">
 
     <include
         android:id="@+id/in_toolbar"

@@ -65,16 +65,16 @@ class DatabaseController(var baseContext: Context) {
                 val image = Image(
                     "",
                     "",
-                    small = cursor.getColumnName(cursor.getColumnIndex(CreateDatabase.IMAGEM_FAVORITA)),
+                    small = cursor.getString(cursor.getColumnIndex(CreateDatabase.IMAGEM_FAVORITA)),
                     template = ""
                 )
                 val game = Game(
-                    id = cursor.getColumnIndex(CreateDatabase.ID).toLong(),
+                    id = cursor.getLong(cursor.getColumnIndex(CreateDatabase.ID)),
                     name = "",
                     giantbomb_id = null,
                     locale = "",
                     logo = null,
-                    localized_name = cursor.getColumnName(cursor.getColumnIndex(CreateDatabase.NOME_FAVORITO)),
+                    localized_name = cursor.getString(cursor.getColumnIndex(CreateDatabase.NOME_FAVORITO)),
                     box = image
                 )
                 lista.add(Top(channels = null, viewers = null, game = game))
@@ -119,12 +119,12 @@ class DatabaseController(var baseContext: Context) {
         if (senha != null) {
             cursor =
                 db.rawQuery(
-                    "SELECT * FROM usuarios where login = " + login + " and senha = " + senha,
-                    null
+                    "SELECT * FROM usuarios where login = ? and senha = ?",
+                    arrayOf(login, senha)
                 )
         } else {
             cursor =
-                db.rawQuery("SELECT * FROM usuarios where login = " + login, null)
+                db.rawQuery("SELECT * FROM usuarios where login = ?", arrayOf(login))
         }
         if (cursor != null) {
             cursor.moveToFirst()
@@ -132,9 +132,9 @@ class DatabaseController(var baseContext: Context) {
         db.close()
 
         var user = User(
-            cursor.getColumnIndex(CreateDatabase.ID),
-            cursor.getColumnName(cursor.getColumnIndex(CreateDatabase.LOGIN)),
-            cursor.getColumnName(cursor.getColumnIndex(CreateDatabase.SENHA))
+            cursor.getInt(cursor.getColumnIndex(CreateDatabase.ID)),
+            cursor.getString(cursor.getColumnIndex(CreateDatabase.LOGIN)),
+            cursor.getString(cursor.getColumnIndex(CreateDatabase.SENHA))
         )
 
         return user

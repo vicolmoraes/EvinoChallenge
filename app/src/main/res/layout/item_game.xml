@@ -17,7 +17,7 @@
         android:padding="@dimen/margin_16">
 
         <TextView
-            android:id="@+id/tv_frase_item_chuck_fact"
+            android:id="@+id/tv_item_game_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:textColor="@color/black_000000"
@@ -26,6 +26,15 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:text="O que temos que ter sempre em mente é que o comprometimento entre as equipes representa uma abertura para a melhoria dos procedimentos normalmente adotados." />
 
+        <ImageView
+            android:id="@+id/iv_item_game_box"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="@dimen/margin_8"
+            android:contentDescription="Favoritar"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_item_game_name"
+            tools:text="categoria" />
         <ImageButton
             android:id="@+id/ib_item_game_fav"
             android:layout_width="50dp"
@@ -34,7 +43,7 @@
             android:background="@drawable/ic_fav"
             android:contentDescription="Favoritar"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_frase_item_chuck_fact"
+            app:layout_constraintTop_toBottomOf="@+id/tv_item_game_name"
             tools:text="categoria" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
