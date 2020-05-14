@@ -31,7 +31,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_8"
-            android:background="@drawable/shape_category"
+            android:background="@drawable/shape_button"
             android:padding="@dimen/margin_8"
             android:textColor="@color/white_ffffff"
             app:layout_constraintStart_toStartOf="parent"

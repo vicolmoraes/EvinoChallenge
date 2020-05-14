@@ -16,29 +16,28 @@ class DatabaseController(var baseContext: Context) {
         contexto = baseContext
     }
 
-    fun insereListaCategoria(lista: ArrayList<String>) {
-        for (categoria in lista)
-            insereDadoCategoria(categoria)
-    }
-
-    fun insereDadoCategoria(titulo: String?): String? {
+    fun insereDadoFavorito(user: Int, name: String, image: String): String? {
         val valores: ContentValues
         val resultado: Long
         db = banco.writableDatabase
         valores = ContentValues()
-        valores.put(CreateDatabase.TITULO, titulo)
-        resultado = db.insert(CreateDatabase.TABELA_CATEGORIA, null, valores)
+        valores.put(CreateDatabase.ID_USUARIO, user)
+        valores.put(CreateDatabase.NOME_FAVORITO, name)
+        valores.put(CreateDatabase.IMAGEM_FAVORITA, image)
+        resultado = db.insert(CreateDatabase.TABELA_FAVORITOS, null, valores)
         db.close()
         return if (resultado == -1L) "Erro ao inserir registro" else {
             "Registro Inserido com sucesso "
         }
     }
 
-    fun carregaDadosCategoria(): Cursor {
+    fun carregaDadosFavoritos(user: Int): Cursor {
         val cursor: Cursor?
         val campos = arrayOf(
             CreateDatabase.ID,
-            CreateDatabase.TITULO
+            CreateDatabase.ID_USUARIO,
+            CreateDatabase.NOME_FAVORITO,
+            CreateDatabase.IMAGEM_FAVORITA
         )
 
         db = banco.readableDatabase
@@ -46,7 +45,7 @@ class DatabaseController(var baseContext: Context) {
             banco.onCreate(db)
         }
         cursor =
-            db.query(CreateDatabase.TABELA_CATEGORIA, campos, null, null, null, null, null, null)
+            db.rawQuery("SELECT * FROM favoritos where id_usuario = " + user, null)
         if (cursor != null) {
             cursor.moveToFirst()
         }
@@ -54,9 +53,9 @@ class DatabaseController(var baseContext: Context) {
         return cursor
     }
 
-    fun carregaListaCategorias(): ArrayList<String> {
+    fun carregaListaFavoritos(user: Int): ArrayList<String> {
         var lista: ArrayList<String> = ArrayList()
-        var cursor: Cursor = carregaDadosCategoria()
+        var cursor: Cursor = carregaDadosFavoritos(user)
         if (cursor.moveToFirst()) {
             do {
                 lista.add(cursor.getString(1))
@@ -65,63 +64,48 @@ class DatabaseController(var baseContext: Context) {
         return lista
     }
 
-    fun carregaListaSugestoes(): ArrayList<String> {
-        var lista: ArrayList<String> = ArrayList()
-        var cursor: Cursor = carregaDadosSugestao()
-        if (cursor.moveToFirst()) {
-            do {
-                lista.add(cursor.getString(1))
-            } while (cursor.moveToNext())
-        }
-        return lista
-    }
-
-    fun alteraRegistroCategoria(
-        id: Int,
-        titulo: String
-    ) {
-        val valores: ContentValues
-        val where: String
-        db = banco.writableDatabase
-        where = CreateDatabase.ID + "=" + id
-        valores = ContentValues()
-        valores.put(CreateDatabase.TITULO, titulo)
-        db.update(CreateDatabase.TABELA_CATEGORIA, valores, where, null)
-        db.close()
-    }
-
-    fun deletaRegistroCategoria(id: Int) {
+    fun deletaRegistroFavorito(id: Int) {
         val where = CreateDatabase.ID + " = " + id
         db = banco.readableDatabase
-        db.delete(CreateDatabase.TABELA_CATEGORIA, where, null)
+        db.delete(CreateDatabase.TABELA_FAVORITOS, where, null)
         db.close()
     }
 
-    fun insereDadoSugestao(titulo: String?): String? {
+    fun insereUsuario(login: String?, senha: String?): String? {
         val valores: ContentValues
         val resultado: Long
         db = banco!!.writableDatabase
         valores = ContentValues()
-        valores.put(CreateDatabase.TITULO, titulo)
-        resultado = db.insert(CreateDatabase.TABELA_SUGESTAO, null, valores)
+        valores.put(CreateDatabase.LOGIN, login)
+        valores.put(CreateDatabase.SENHA, senha)
+        resultado = db.insert(CreateDatabase.TABELA_USUARIO, null, valores)
         db.close()
         return if (resultado == -1L) "Erro ao inserir registro" else {
             "Registro Inserido com sucesso "
         }
     }
 
-    fun carregaDadosSugestao(): Cursor {
+    fun carregaUsuario(login: String, senha: String?): Cursor? {
         val cursor: Cursor?
         val campos = arrayOf(
             CreateDatabase.ID,
-            CreateDatabase.TITULO
+            CreateDatabase.LOGIN,
+            CreateDatabase.SENHA
         )
         db = banco.readableDatabase
         if (!banco.doesDatabaseExist(contexto)) {
             banco.onCreate(db)
         }
-        cursor =
-            db.query(CreateDatabase.TABELA_SUGESTAO, campos, null, null, null, null, null, null)
+        if (senha != null) {
+            cursor =
+                db.rawQuery(
+                    "SELECT * FROM usuarios where login = " + login + " and senha = " + senha,
+                    null
+                )
+        } else {
+            cursor =
+                db.rawQuery("SELECT * FROM usuarios where login = " + login, null)
+        }
         if (cursor != null) {
             cursor.moveToFirst()
         }
@@ -129,23 +113,4 @@ class DatabaseController(var baseContext: Context) {
         return cursor
     }
 
-    fun alteraRegistroSugestao(
-        titulo: String
-    ) {
-        val valores: ContentValues
-        val where: String
-        db = banco.writableDatabase
-        where = CreateDatabase.TITULO + "=" + titulo
-        valores = ContentValues()
-        valores.put(CreateDatabase.TITULO, titulo)
-        db.update(CreateDatabase.TABELA_SUGESTAO, valores, where, null)
-        db.close()
-    }
-
-    fun deletaRegistroSugestao(id: Int) {
-        val where = CreateDatabase.ID + " = " + id
-        db = banco.readableDatabase
-        db.delete(CreateDatabase.TABELA_SUGESTAO, where, null)
-        db.close()
-    }
 }

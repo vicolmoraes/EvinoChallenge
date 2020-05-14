@@ -21,6 +21,7 @@
             </intent-filter>
         </activity>
         <activity android:name="com.example.evinochallenge.view.SearchActivity" />
+        <activity android:name="com.example.evinochallenge.view.RegisterActivity" />
     </application>
 
 </manifest>

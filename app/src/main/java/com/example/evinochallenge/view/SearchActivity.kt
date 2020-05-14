@@ -1,9 +1,12 @@
 package com.example.evinochallenge.view
 
+import android.content.Intent
 import android.os.Bundle
-import android.widget.EditText
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.RecyclerView
 import com.example.evinochallenge.DatabaseController
 import com.example.evinochallenge.R
@@ -15,7 +18,6 @@ import kotlinx.android.synthetic.main.activity_search.*
 
 class SearchActivity : AppCompatActivity(),
     StandardActivity {
-    lateinit var etBusca: EditText
     lateinit var rvResults: RecyclerView
     lateinit var crud: DatabaseController
     override lateinit var interactor: Interactor
@@ -26,8 +28,29 @@ class SearchActivity : AppCompatActivity(),
 
         Router.INSTANCE.setCleanArchitecture(this)
         findViews()
+        setToolbar("Adicione jogos a sua lista de favoritos")
     }
 
+    fun setToolbar(titulo: String?) {
+        val toolbar: Toolbar = in_toolbar as Toolbar
+        setSupportActionBar(toolbar)
+        supportActionBar!!.setTitle(titulo)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menu?.removeItem(R.id.item_add)
+        menuInflater.inflate(R.menu.menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.item_fav) {
+            val intent = Intent(this, RegisterActivity::class.java)
+            startActivity(intent)
+        }
+
+        return true
+    }
     private fun findViews() {
         interactor.fetch()
     }

@@ -2,9 +2,14 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/item_pesquisar"
-        android:icon="@drawable/ic_icons_pesquisar"
-        android:title="pesquisar"
+        android:id="@+id/item_add"
+        android:icon="@drawable/ic_add"
+        android:title="Adicionar usuário"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/item_fav"
+        android:icon="@drawable/ic_fav"
+        android:title="Adicionar Favorito"
         app:showAsAction="always" />
 
 </menu>

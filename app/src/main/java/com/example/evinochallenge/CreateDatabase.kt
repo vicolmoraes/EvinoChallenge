@@ -10,13 +10,16 @@ class CreateDatabase internal constructor(context: Context?) :
     SQLiteOpenHelper(context, NOME_BANCO, null, VERSAO) {
     var db: SQLiteDatabase? = null
     override fun onCreate(db: SQLiteDatabase) {
-        val sqlCategoria = ("CREATE TABLE " + TABELA_CATEGORIA + " ( "
+        val sqlCategoria = ("CREATE TABLE " + TABELA_USUARIO + " ( "
                 + ID + " integer primary key autoincrement,"
-                + TITULO + " text"
+                + LOGIN + " text,"
+                + SENHA + " text"
                 + " );")
-        val sqlSugestao = ("CREATE TABLE " + TABELA_SUGESTAO + " ( "
+        val sqlSugestao = ("CREATE TABLE " + TABELA_FAVORITOS + " ( "
                 + ID + " integer primary key autoincrement,"
-                + TITULO + " text"
+                + ID_USUARIO + " integer,"
+                + NOME_FAVORITO + " text,"
+                + IMAGEM_FAVORITA + " text"
                 + " );")
         db.execSQL(sqlCategoria)
         db.execSQL(sqlSugestao)
@@ -27,8 +30,8 @@ class CreateDatabase internal constructor(context: Context?) :
         oldVersion: Int,
         newVersion: Int
     ) {
-        db.execSQL("DROP TABLE IF EXISTS $TABELA_CATEGORIA")
-        db.execSQL("DROP TABLE IF EXISTS $TABELA_SUGESTAO")
+        db.execSQL("DROP TABLE IF EXISTS $TABELA_USUARIO")
+        db.execSQL("DROP TABLE IF EXISTS $TABELA_FAVORITOS")
         onCreate(db)
     }
 
@@ -39,10 +42,14 @@ class CreateDatabase internal constructor(context: Context?) :
 
     companion object {
         const val NOME_BANCO = "banco.db"
-        const val TABELA_CATEGORIA = "categorias"
-        const val TABELA_SUGESTAO = "sugestoes"
+        const val TABELA_USUARIO = "usuarios"
+        const val TABELA_FAVORITOS = "favoritos"
         const val ID = "id"
-        const val TITULO = "titulo"
-        const val VERSAO = 2
+        const val LOGIN = "login"
+        const val SENHA = "senha"
+        const val VERSAO = 1
+        const val ID_USUARIO = "id_usuario"
+        const val NOME_FAVORITO = "nome_favorito"
+        const val IMAGEM_FAVORITA = "imagem_favorita"
     }
 }
