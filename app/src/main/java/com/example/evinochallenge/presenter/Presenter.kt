@@ -11,7 +11,7 @@ class Presenter {
         activity.error(resposta)
     }
 
-    fun results(resposta: List<Top>) {
+    fun results(resposta: List<Top?>) {
         activity.results(resposta)
     }
 

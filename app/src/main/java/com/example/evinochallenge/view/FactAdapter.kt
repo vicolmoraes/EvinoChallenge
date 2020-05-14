@@ -9,13 +9,13 @@ import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.evinochallenge.R
 import com.example.evinochallenge.entity.Top
-import kotlinx.android.synthetic.main.item_chuck_fact.view.*
+import kotlinx.android.synthetic.main.item_game.view.*
 
 
 class FactAdapter(
-    val items: ArrayList<Top>,
+    val items: ArrayList<Top?>,
     val context: Context,
-    val clickListener: (Top) -> Unit
+    val clickListener: (Top?) -> Unit
 ) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -26,7 +26,7 @@ class FactAdapter(
     override fun onCreateViewHolder(p0: ViewGroup, p1: Int): FactViewHolder {
         return FactViewHolder(
             LayoutInflater.from(context).inflate(
-                R.layout.item_chuck_fact,
+                R.layout.item_game,
                 p0,
                 false
             )
@@ -39,9 +39,9 @@ class FactAdapter(
 
     class FactViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val itemVieww = view
-        fun bind(part: Top, clickListener: (Top) -> Unit) {
+        fun bind(part: Top?, clickListener: (Top?) -> Unit) {
 
-            itemVieww.tv_frase_item_chuck_fact.text = part.game.localized_name
+            itemVieww.tv_frase_item_chuck_fact.text = part?.game?.localized_name
 
             val layout: CardView = itemVieww.cv_card
 
@@ -53,7 +53,7 @@ class FactAdapter(
             animZoomin.startOffset = x.toLong()
             layout.setAnimation(animZoomin)
 
-            itemVieww.ib_link_item_chuck_fact.setOnClickListener { clickListener(part) }
+            itemVieww.ib_item_game_fav.setOnClickListener { clickListener(part) }
         }
 
     }

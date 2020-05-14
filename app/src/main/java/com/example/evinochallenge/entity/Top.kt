@@ -7,12 +7,12 @@ import java.io.Serializable
 @JsonIgnoreProperties(ignoreUnknown = true)
 data class Top(
     @JsonProperty("channels")
-    var channels: Long,
+    var channels: Long?,
 
     @JsonProperty("viewers")
-    var viewers: Long,
+    var viewers: Long?,
 
     @JsonProperty("game")
-    var game: Game
+    var game: Game?
 
 ) : Serializable

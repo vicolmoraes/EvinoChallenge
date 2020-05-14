@@ -5,14 +5,14 @@ import com.fasterxml.jackson.annotation.JsonProperty
 import java.io.Serializable
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-data class Image(
-    @JsonProperty("large")
-    var large: String?,
-    @JsonProperty("medium")
-    var medium: String?,
-    @JsonProperty("small")
-    var small: String?,
-    @JsonProperty("template")
-    var template: String?
+data class User(
+    @JsonProperty("id")
+    var id: Int,
+
+    @JsonProperty("login")
+    var login: String,
+
+    @JsonProperty("pass")
+    var pass: String
 
 ) : Serializable

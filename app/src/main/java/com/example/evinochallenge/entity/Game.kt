@@ -7,23 +7,23 @@ import java.io.Serializable
 @JsonIgnoreProperties(ignoreUnknown = true)
 data class Game(
     @JsonProperty("name")
-    var name: String,
+    var name: String?,
 
     @JsonProperty("id")
-    var id: Long,
+    var id: Long?,
 
     @JsonProperty("giantbomb_id")
-    var giantbomb_id: Long,
+    var giantbomb_id: Long?,
 
     @JsonProperty("box")
-    var box: Image,
+    var box: Image?,
 
     @JsonProperty("logo")
-    var logo: Image,
+    var logo: Image?,
 
     @JsonProperty("localized_name")
-    var localized_name: String,
+    var localized_name: String?,
 
     @JsonProperty("locale")
-    var locale: String
+    var locale: String?
 ) : Serializable

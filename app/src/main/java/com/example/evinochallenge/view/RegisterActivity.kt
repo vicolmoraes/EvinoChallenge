@@ -12,6 +12,7 @@ import com.example.evinochallenge.R
 import com.example.evinochallenge.interactor.Interactor
 import com.example.evinochallenge.router.Router
 import kotlinx.android.synthetic.main.activity_register.*
+import java.io.Serializable
 
 class RegisterActivity : AppCompatActivity(),
     StandardActivity {
@@ -37,15 +38,20 @@ class RegisterActivity : AppCompatActivity(),
         crud.iniciar()
         btRegister.setOnClickListener(View.OnClickListener {
             if (!etLogin.text.isEmpty() && !etPass.text.isEmpty()) {
-                if (crud.carregaUsuario(etLogin.text.toString(), null) != null) {
+                try {
+                    crud.carregaUsuario(etLogin.text.toString(), null) != null
                     Toast.makeText(
                         baseContext,
                         "Este login já existe",
                         Toast.LENGTH_SHORT
                     ).show()
-                } else {
+                } catch (e: Exception) {
                     crud.insereUsuario(etLogin.text.toString(), etPass.text.toString())
                     val intent = Intent(this, SearchActivity::class.java)
+                    intent.putExtra(
+                        "USER",
+                        crud.carregaUsuario(etLogin.text.toString(), null) as Serializable
+                    )
                     startActivity(intent)
                     finish()
                 }

@@ -15,6 +15,7 @@ import com.example.evinochallenge.R
 import com.example.evinochallenge.interactor.Interactor
 import com.example.evinochallenge.router.Router
 import kotlinx.android.synthetic.main.activity_main.*
+import java.io.Serializable
 
 class MainActivity : AppCompatActivity(),
     StandardActivity {
@@ -41,18 +42,23 @@ class MainActivity : AppCompatActivity(),
         crud.iniciar()
         btEnter.setOnClickListener(View.OnClickListener {
             if (!etLogin.text.isEmpty() && !etPass.text.isEmpty()) {
-                if (crud.carregaUsuario(etLogin.text.toString(), etPass.text.toString()) != null) {
+                try {
+                    crud.carregaUsuario(etLogin.text.toString(), etPass.text.toString()) != null
                     val intent = Intent(this, SearchActivity::class.java)
+                    intent.putExtra(
+                        "USER",
+                        crud.carregaUsuario(etLogin.text.toString(), null) as Serializable
+                    )
                     startActivity(intent)
                     finish()
-                } else {
+                } catch (e: Exception) {
                     Toast.makeText(
                         baseContext,
                         "Login ou senha errados",
                         Toast.LENGTH_SHORT
                     ).show()
-
                 }
+
             } else {
                 Toast.makeText(
                     baseContext,

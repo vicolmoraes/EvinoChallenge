@@ -22,6 +22,7 @@
         </activity>
         <activity android:name="com.example.evinochallenge.view.SearchActivity" />
         <activity android:name="com.example.evinochallenge.view.RegisterActivity" />
+        <activity android:name="com.example.evinochallenge.view.FavoriteActivity" />
     </application>
 
 </manifest>

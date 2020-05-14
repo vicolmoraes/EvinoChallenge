@@ -1,9 +1,7 @@
 package com.example.evinochallenge.view
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
-import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -15,10 +13,9 @@ import com.example.evinochallenge.entity.User
 import com.example.evinochallenge.interactor.Interactor
 import com.example.evinochallenge.router.Router
 import kotlinx.android.synthetic.main.activity_search.*
-import java.io.Serializable
 
 
-class SearchActivity : AppCompatActivity(),
+class FavoriteActivity : AppCompatActivity(),
     StandardActivity {
     lateinit var rvResults: RecyclerView
     lateinit var crud: DatabaseController
@@ -31,7 +28,7 @@ class SearchActivity : AppCompatActivity(),
 
         Router.INSTANCE.setCleanArchitecture(this)
         findViews()
-        setToolbar("Adicione jogos a sua lista de favoritos")
+        setToolbar(user.login + " favoritos")
     }
 
     fun setToolbar(titulo: String?) {
@@ -42,46 +39,22 @@ class SearchActivity : AppCompatActivity(),
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menu?.removeItem(R.id.item_add)
+        menu?.removeItem(R.id.item_fav)
         menuInflater.inflate(R.menu.menu, menu)
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == R.id.item_fav) {
-            val intent = Intent(this, FavoriteActivity::class.java)
-            intent.putExtra("USER", user as Serializable)
-            startActivity(intent)
-        }
-
         return true
     }
 
     private fun findViews() {
         crud = DatabaseController(this)
         crud.iniciar()
-        interactor.fetch()
+        rvResults = rv_results_activity_search
         if (intent.extras?.get("USER") != null)
             user = intent.extras?.get("USER") as User
-    }
+        setRecycler(crud.carregaListaFavoritos(user.id))
 
-    override fun error(resposta: String?) {
-        Toast.makeText(
-            baseContext,
-            resposta,
-            Toast.LENGTH_SHORT
-        ).show()
-    }
-
-    override fun results(resposta: List<Top?>) {
-        val lista: ArrayList<Top?> = ArrayList()
-        if (resposta.size > 100)
-            lista.addAll(resposta.subList(0, 100))
-        else lista.addAll(resposta)
-        setRecycler(lista)
     }
 
     private fun setRecycler(gamesList: ArrayList<Top?>) {
-        rvResults = rv_results_activity_search
         rvResults.adapter =
             FactAdapter(gamesList, this, { partItem: Top? -> partItemClicked(partItem) })
     }
@@ -89,9 +62,10 @@ class SearchActivity : AppCompatActivity(),
     private fun partItemClicked(game: Top?) {
         Toast.makeText(
             baseContext,
-            "Favoritado",
+            "Desfavoritado",
             Toast.LENGTH_SHORT
         ).show()
-        crud.insereDadoFavorito(user.id, game?.game?.localized_name, game?.game?.box?.small)
+        crud.deletaRegistroFavorito(game?.game?.id)
+        setRecycler(crud.carregaListaFavoritos(user.id))
     }
 }

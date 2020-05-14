@@ -8,7 +8,7 @@ interface StandardActivity {
     fun error(resposta: String?) {
     }
 
-    fun results(resposta: List<Top>) {
+    fun results(resposta: List<Top?>) {
     }
 
 }

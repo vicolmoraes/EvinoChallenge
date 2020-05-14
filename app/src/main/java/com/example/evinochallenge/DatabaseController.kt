@@ -4,6 +4,10 @@ import android.content.ContentValues
 import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
+import com.example.evinochallenge.entity.Game
+import com.example.evinochallenge.entity.Image
+import com.example.evinochallenge.entity.Top
+import com.example.evinochallenge.entity.User
 
 
 class DatabaseController(var baseContext: Context) {
@@ -16,7 +20,7 @@ class DatabaseController(var baseContext: Context) {
         contexto = baseContext
     }
 
-    fun insereDadoFavorito(user: Int, name: String, image: String): String? {
+    fun insereDadoFavorito(user: Int, name: String?, image: String?): String? {
         val valores: ContentValues
         val resultado: Long
         db = banco.writableDatabase
@@ -53,18 +57,34 @@ class DatabaseController(var baseContext: Context) {
         return cursor
     }
 
-    fun carregaListaFavoritos(user: Int): ArrayList<String> {
-        var lista: ArrayList<String> = ArrayList()
+    fun carregaListaFavoritos(user: Int): ArrayList<Top?> {
+        var lista: ArrayList<Top?> = ArrayList()
         var cursor: Cursor = carregaDadosFavoritos(user)
         if (cursor.moveToFirst()) {
             do {
-                lista.add(cursor.getString(1))
+                val image = Image(
+                    "",
+                    "",
+                    small = cursor.getColumnName(cursor.getColumnIndex(CreateDatabase.IMAGEM_FAVORITA)),
+                    template = ""
+                )
+                val game = Game(
+                    id = cursor.getColumnIndex(CreateDatabase.ID).toLong(),
+                    name = "",
+                    giantbomb_id = null,
+                    locale = "",
+                    logo = null,
+                    localized_name = cursor.getColumnName(cursor.getColumnIndex(CreateDatabase.NOME_FAVORITO)),
+                    box = image
+                )
+                lista.add(Top(channels = null, viewers = null, game = game))
+
             } while (cursor.moveToNext())
         }
         return lista
     }
 
-    fun deletaRegistroFavorito(id: Int) {
+    fun deletaRegistroFavorito(id: Long?) {
         val where = CreateDatabase.ID + " = " + id
         db = banco.readableDatabase
         db.delete(CreateDatabase.TABELA_FAVORITOS, where, null)
@@ -85,7 +105,7 @@ class DatabaseController(var baseContext: Context) {
         }
     }
 
-    fun carregaUsuario(login: String, senha: String?): Cursor? {
+    fun carregaUsuario(login: String, senha: String?): User? {
         val cursor: Cursor?
         val campos = arrayOf(
             CreateDatabase.ID,
@@ -110,7 +130,14 @@ class DatabaseController(var baseContext: Context) {
             cursor.moveToFirst()
         }
         db.close()
-        return cursor
+
+        var user = User(
+            cursor.getColumnIndex(CreateDatabase.ID),
+            cursor.getColumnName(cursor.getColumnIndex(CreateDatabase.LOGIN)),
+            cursor.getColumnName(cursor.getColumnIndex(CreateDatabase.SENHA))
+        )
+
+        return user
     }
 
 }
