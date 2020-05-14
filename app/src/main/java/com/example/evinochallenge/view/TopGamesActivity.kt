@@ -31,7 +31,7 @@ class TopGamesActivity : AppCompatActivity(),
 
         Router.INSTANCE.setCleanArchitecture(this)
         findViews()
-        setToolbar("Adicione jogos a sua lista de favoritos")
+        setToolbar(getString(R.string.toolbarTopGames))
     }
 
     fun setToolbar(titulo: String?) {
@@ -42,6 +42,7 @@ class TopGamesActivity : AppCompatActivity(),
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu, menu)
+        menu!!.findItem(R.id.item_add).setVisible(false)
         return true
     }
 
@@ -88,9 +89,10 @@ class TopGamesActivity : AppCompatActivity(),
     private fun partItemClicked(game: Top?) {
         Toast.makeText(
             baseContext,
-            "Favoritado",
+            R.string.favoritado,
             Toast.LENGTH_SHORT
         ).show()
-        crud.insereDadoFavorito(user.id, game?.game?.localized_name, game?.game?.box?.small)
+
+        crud.insertFavorites(user.id, game?.game?.localized_name, game?.game?.box?.small)
     }
 }

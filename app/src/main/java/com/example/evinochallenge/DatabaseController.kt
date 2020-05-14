@@ -20,22 +20,31 @@ class DatabaseController(var baseContext: Context) {
         contexto = baseContext
     }
 
-    fun insereDadoFavorito(user: Int, name: String?, image: String?): String? {
+    fun insertFavorites(user: Int, name: String?, image: String?): String? {
         val valores: ContentValues
-        val resultado: Long
+        var resultado: Long
         db = banco.writableDatabase
         valores = ContentValues()
-        valores.put(CreateDatabase.ID_USUARIO, user)
+        valores.put(CreateDatabase.ID_USUARIO, user.toLong())
         valores.put(CreateDatabase.NOME_FAVORITO, name)
         valores.put(CreateDatabase.IMAGEM_FAVORITA, image)
-        resultado = db.insert(CreateDatabase.TABELA_FAVORITOS, null, valores)
+        try {
+            resultado = db.update(
+                CreateDatabase.TABELA_FAVORITOS,
+                valores,
+                CreateDatabase.ID_USUARIO + " = ?" + user,
+                arrayOf(user.toString())
+            ).toLong()
+        } catch (e: Exception) {
+            resultado = db.insert(CreateDatabase.TABELA_FAVORITOS, null, valores)
+        }
         db.close()
         return if (resultado == -1L) "Erro ao inserir registro" else {
             "Registro Inserido com sucesso "
         }
     }
 
-    fun carregaDadosFavoritos(user: Int): Cursor {
+    fun loadFavorites(user: Int): Cursor {
         val cursor: Cursor?
         val campos = arrayOf(
             CreateDatabase.ID,
@@ -57,9 +66,9 @@ class DatabaseController(var baseContext: Context) {
         return cursor
     }
 
-    fun carregaListaFavoritos(user: Int): ArrayList<Top?> {
+    fun loadFavoritesList(user: Int): ArrayList<Top?> {
         var lista: ArrayList<Top?> = ArrayList()
-        var cursor: Cursor = carregaDadosFavoritos(user)
+        var cursor: Cursor = loadFavorites(user)
         if (cursor.moveToFirst()) {
             do {
                 val image = Image(
@@ -84,14 +93,14 @@ class DatabaseController(var baseContext: Context) {
         return lista
     }
 
-    fun deletaRegistroFavorito(id: Long?) {
+    fun deleteFavorite(id: Long?) {
         val where = CreateDatabase.ID + " = " + id
         db = banco.readableDatabase
         db.delete(CreateDatabase.TABELA_FAVORITOS, where, null)
         db.close()
     }
 
-    fun insereUsuario(login: String?, senha: String?): String? {
+    fun insertUser(login: String?, senha: String?): String? {
         val valores: ContentValues
         val resultado: Long
         db = banco!!.writableDatabase
@@ -105,7 +114,7 @@ class DatabaseController(var baseContext: Context) {
         }
     }
 
-    fun carregaUsuario(login: String, senha: String?): User? {
+    fun loadUser(login: String, senha: String?): User? {
         val cursor: Cursor?
         val campos = arrayOf(
             CreateDatabase.ID,

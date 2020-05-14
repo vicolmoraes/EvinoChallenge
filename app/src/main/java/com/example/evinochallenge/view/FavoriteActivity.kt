@@ -1,7 +1,6 @@
 package com.example.evinochallenge.view
 
 import android.os.Bundle
-import android.view.Menu
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -28,7 +27,7 @@ class FavoriteActivity : AppCompatActivity(),
 
         Router.INSTANCE.setCleanArchitecture(this)
         findViews()
-        setToolbar(user.login + " favoritos")
+        setToolbar(user.login + getString(R.string.toolbarFavorite))
     }
 
     fun setToolbar(titulo: String?) {
@@ -37,21 +36,13 @@ class FavoriteActivity : AppCompatActivity(),
         supportActionBar!!.setTitle(titulo)
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menu?.removeItem(R.id.item_add)
-        menu?.removeItem(R.id.item_fav)
-        menuInflater.inflate(R.menu.menu, menu)
-        return true
-    }
-
     private fun findViews() {
         crud = DatabaseController(this)
         crud.iniciar()
         rvResults = rv_results_activity_search
         if (intent.extras?.get("USER") != null)
             user = intent.extras?.get("USER") as User
-        setRecycler(crud.carregaListaFavoritos(user.id))
-
+        setRecycler(crud.loadFavoritesList(user.id))
     }
 
     private fun setRecycler(gamesList: ArrayList<Top?>) {
@@ -62,10 +53,10 @@ class FavoriteActivity : AppCompatActivity(),
     private fun partItemClicked(game: Top?) {
         Toast.makeText(
             baseContext,
-            "Desfavoritado",
+            R.string.desfavoritado,
             Toast.LENGTH_SHORT
         ).show()
-        crud.deletaRegistroFavorito(game?.game?.id)
-        setRecycler(crud.carregaListaFavoritos(user.id))
+        crud.deleteFavorite(game?.game?.id)
+        setRecycler(crud.loadFavoritesList(user.id))
     }
 }

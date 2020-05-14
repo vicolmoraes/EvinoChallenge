@@ -17,6 +17,7 @@ import com.example.evinochallenge.router.Router
 import kotlinx.android.synthetic.main.activity_main.*
 import java.io.Serializable
 
+
 class MainActivity : AppCompatActivity(),
     StandardActivity {
     override lateinit var interactor: Interactor
@@ -30,7 +31,7 @@ class MainActivity : AppCompatActivity(),
 
         Router.INSTANCE.setCleanArchitecture(this)
 
-        setToolbar("Bem Vindo")
+        setToolbar(getString(R.string.toolbarMain))
         findViews()
     }
 
@@ -43,18 +44,18 @@ class MainActivity : AppCompatActivity(),
         btEnter.setOnClickListener(View.OnClickListener {
             if (!etLogin.text.isEmpty() && !etPass.text.isEmpty()) {
                 try {
-                    crud.carregaUsuario(etLogin.text.toString(), etPass.text.toString()) != null
+                    crud.loadUser(etLogin.text.toString(), etPass.text.toString()) != null
                     val intent = Intent(this, TopGamesActivity::class.java)
                     intent.putExtra(
                         "USER",
-                        crud.carregaUsuario(etLogin.text.toString(), null) as Serializable
+                        crud.loadUser(etLogin.text.toString(), null) as Serializable
                     )
                     startActivity(intent)
                     finish()
                 } catch (e: Exception) {
                     Toast.makeText(
                         baseContext,
-                        "Login ou senha errados",
+                        R.string.warningLoginSenhaErrados,
                         Toast.LENGTH_SHORT
                     ).show()
                 }
@@ -62,7 +63,7 @@ class MainActivity : AppCompatActivity(),
             } else {
                 Toast.makeText(
                     baseContext,
-                    "O campo login e senha precisam ser preenchidos",
+                    R.string.warningLoginSenhaNaoPreenchidos,
                     Toast.LENGTH_SHORT
                 ).show()
             }
@@ -75,8 +76,9 @@ class MainActivity : AppCompatActivity(),
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menu?.removeItem(R.id.item_fav)
+
         menuInflater.inflate(R.menu.menu, menu)
+        menu!!.findItem(R.id.item_fav).setVisible(false)
         return true
     }
 

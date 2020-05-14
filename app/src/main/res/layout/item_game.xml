@@ -28,22 +28,23 @@
 
         <ImageView
             android:id="@+id/iv_item_game_box"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:importantForAccessibility="no"
             android:layout_marginTop="@dimen/margin_8"
-            android:contentDescription="Favoritar"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_item_game_name"
             tools:text="categoria" />
+
         <ImageButton
             android:id="@+id/ib_item_game_fav"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_marginTop="@dimen/margin_8"
             android:background="@drawable/ic_fav"
-            android:contentDescription="Favoritar"
+            android:contentDescription="@string/favoritar"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_item_game_box"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_item_game_name"
             tools:text="categoria" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

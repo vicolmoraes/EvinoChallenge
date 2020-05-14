@@ -7,6 +7,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import com.example.evinochallenge.DatabaseController
 import com.example.evinochallenge.R
 import com.example.evinochallenge.interactor.Interactor
@@ -28,6 +29,13 @@ class RegisterActivity : AppCompatActivity(),
         Router.INSTANCE.setCleanArchitecture(this)
 
         findViews()
+        setToolbar(getString(R.string.toolbarRegister))
+    }
+
+    fun setToolbar(titulo: String?) {
+        val toolbar: Toolbar = in_toolbar as Toolbar
+        setSupportActionBar(toolbar)
+        supportActionBar!!.setTitle(titulo)
     }
 
     fun findViews() {
@@ -39,18 +47,18 @@ class RegisterActivity : AppCompatActivity(),
         btRegister.setOnClickListener(View.OnClickListener {
             if (!etLogin.text.isEmpty() && !etPass.text.isEmpty()) {
                 try {
-                    crud.carregaUsuario(etLogin.text.toString(), null) != null
+                    crud.loadUser(etLogin.text.toString(), null) != null
                     Toast.makeText(
                         baseContext,
-                        "Este login já existe",
+                        R.string.warningLoginJaExistente,
                         Toast.LENGTH_SHORT
                     ).show()
                 } catch (e: Exception) {
-                    crud.insereUsuario(etLogin.text.toString(), etPass.text.toString())
+                    crud.insertUser(etLogin.text.toString(), etPass.text.toString())
                     val intent = Intent(this, TopGamesActivity::class.java)
                     intent.putExtra(
                         "USER",
-                        crud.carregaUsuario(etLogin.text.toString(), null) as Serializable
+                        crud.loadUser(etLogin.text.toString(), null) as Serializable
                     )
                     startActivity(intent)
                     finish()
@@ -58,7 +66,7 @@ class RegisterActivity : AppCompatActivity(),
             } else {
                 Toast.makeText(
                     baseContext,
-                    "O campo login e senha precisam ser preenchidos",
+                    R.string.warningLoginSenhaNaoPreenchidos,
                     Toast.LENGTH_SHORT
                 ).show()
             }

@@ -6,30 +6,39 @@
     android:layout_height="match_parent"
     tools:context=".view.RegisterActivity">
 
+    <include
+        android:id="@+id/in_toolbar"
+        layout="@layout/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <EditText
         android:id="@+id/et_activity_register_login"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_8"
-        android:hint="Login"
-        android:imeOptions="actionDone"
+        android:hint="@string/login"
+        android:imeOptions="actionNext"
         android:importantForAutofill="no"
         android:inputType="text"
         android:textAlignment="center"
         android:textColor="@color/blue_1e3c72"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintBottom_toTopOf="@+id/et_activity_register_pass"
+        app:layout_constraintTop_toBottomOf="@+id/in_toolbar" />
 
     <EditText
         android:id="@+id/et_activity_register_pass"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_8"
-        android:hint="Senha"
+        android:hint="@string/senha"
         android:imeOptions="actionDone"
         android:importantForAutofill="no"
-        android:inputType="text"
+        android:inputType="textPassword"
         android:textAlignment="center"
         android:textColor="@color/blue_1e3c72"
+        app:layout_constraintBottom_toTopOf="@+id/bt_activity_register_register"
         app:layout_constraintTop_toBottomOf="@+id/et_activity_register_login" />
 
     <Button
@@ -38,9 +47,10 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_8"
         android:background="@drawable/shape_button"
-        android:text="Cadastrar"
+        android:text="@string/cadastrar"
         android:textColor="@color/white_ffffff"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/et_activity_register_pass" />
 </androidx.constraintlayout.widget.ConstraintLayout>

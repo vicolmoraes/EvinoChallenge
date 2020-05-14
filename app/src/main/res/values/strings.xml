@@ -1,3 +1,21 @@
 <resources>
     <string name="app_name">EvinoChallenge</string>
+    <string name="login">Login</string>
+    <string name="senha">Senha</string>
+    <string name="cadastrar">Cadastrar</string>
+    <string name="entrar">Entrar</string>
+    <string name="favoritar">Favoritar</string>
+    <string name="favoritado">Favoritado</string>
+    <string name="desfavoritado">Desfavoritado</string>
+
+    // Warnings
+    <string name="warningLoginSenhaErrados">Login ou senha errados</string>
+    <string name="warningLoginSenhaNaoPreenchidos">O campo login e senha precisam ser preenchidos</string>
+    <string name="warningLoginJaExistente">Este login já existe</string>
+
+    //Toolbar
+    <string name="toolbarMain">Bem Vindo</string>
+    <string name="toolbarRegister">Cadastrar Usuário</string>
+    <string name="toolbarFavorite">&#160;Favoritos</string>
+    <string name="toolbarTopGames">Adicione jogos aos favoritos</string>
 </resources>
