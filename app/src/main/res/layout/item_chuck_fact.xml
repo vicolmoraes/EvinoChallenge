@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cv_card"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="@dimen/margin_16"
+    android:layout_marginTop="@dimen/margin_16"
+    android:layout_marginEnd="@dimen/margin_16"
+    app:cardBackgroundColor="@color/blue_e3eeff">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_item_chuck_fact"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="@dimen/margin_16">
+
+        <TextView
+            android:id="@+id/tv_frase_item_chuck_fact"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black_000000"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="O que temos que ter sempre em mente é que o comprometimento entre as equipes representa uma abertura para a melhoria dos procedimentos normalmente adotados." />
+
+        <Button
+            android:id="@+id/bt_category_item_chuck_fact"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_8"
+            android:background="@drawable/shape_category"
+            android:padding="@dimen/margin_8"
+            android:textColor="@color/white_ffffff"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_frase_item_chuck_fact"
+            tools:text="categoria" />
+
+        <ImageButton
+            android:id="@+id/ib_link_item_chuck_fact"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="@dimen/margin_8"
+            android:background="@drawable/ic_share"
+            android:contentDescription="Compartilhar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_frase_item_chuck_fact"
+            tools:text="categoria" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>
