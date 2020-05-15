@@ -8,10 +8,14 @@ Para inicializar o aplicativo clique em "Run App" (Shift + F10) e então escolha
 
 <p align="center">
 <b>Tela de Login</b>
-<img width="400" height="800" src="https://raw.githubusercontent.com/vicolmoraes/EvinoChallenge/master/login.png">
-<b>Tela com lista dos Top Games</b>
-<img width="400" height="800" src="https://raw.githubusercontent.com/vicolmoraes/EvinoChallenge/master/top_games.png">
-<b>Tela com lista dos jogos favoritos do usuário</b>
-<img width="400" height="800" src="https://raw.githubusercontent.com/vicolmoraes/EvinoChallenge/master/favorites.png"></p>
+<img width="400" height="800" src="https://github.com/vicolmoraes/EvinoChallenge/master/login.png"><br>
+
+<b>Tela com lista dos Top Games</b><br>
+
+<img width="400" height="800" src="https://github.com/vicolmoraes/EvinoChallenge/master/top_games.png"><br>
+
+<b>Tela com lista dos jogos favoritos do usuário</b><br>
+
+<img width="400" height="800" src="https://github.com/vicolmoraes/EvinoChallenge/master/favorites.png"></p><br>
 
 
