@@ -19,12 +19,13 @@ import kotlinx.android.synthetic.main.item_game.view.*
 class GameAdapter(
     val items: ArrayList<Top?>,
     val context: Context,
+    val favorites: Boolean,
     val clickListener: (Top?) -> Unit
 ) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun onBindViewHolder(p0: RecyclerView.ViewHolder, p1: Int) {
-        (p0 as FactViewHolder).bind(items[p1], clickListener)
+        (p0 as FactViewHolder).bind(items[p1], clickListener, favorites)
     }
 
     override fun onCreateViewHolder(p0: ViewGroup, p1: Int): FactViewHolder {
@@ -43,7 +44,7 @@ class GameAdapter(
 
     class FactViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val itemVieww = view
-        fun bind(part: Top?, clickListener: (Top?) -> Unit) {
+        fun bind(part: Top?, clickListener: (Top?) -> Unit, favorites: Boolean) {
 
             itemVieww.tv_item_game_name.text = part?.game?.localized_name
             itemVieww.tv_item_game_canais_numero.text = part?.channels.toString()
@@ -61,6 +62,10 @@ class GameAdapter(
             val x = 200 * adapterPosition
             animZoomin.startOffset = x.toLong()
             layout.setAnimation(animZoomin)
+
+            if (favorites) {
+                itemVieww.ib_item_game_fav.setBackgroundResource(R.drawable.ic_fav_broken)
+            }
 
             itemVieww.ib_item_game_fav.setOnClickListener {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {

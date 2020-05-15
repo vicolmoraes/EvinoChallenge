@@ -56,7 +56,7 @@ class FavoriteActivity : AppCompatActivity(),
 
     private fun setRecycler(gamesList: ArrayList<Top?>) {
         rvResults.adapter =
-            GameAdapter(gamesList, this, { partItem: Top? -> partItemClicked(partItem) })
+            GameAdapter(gamesList, this, true, { partItem: Top? -> partItemClicked(partItem) })
     }
 
     private fun partItemClicked(game: Top?) {

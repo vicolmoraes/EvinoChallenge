@@ -16,6 +16,7 @@
     <string name="warningLoginSenhaErrados">Login ou senha errados</string>
     <string name="warningLoginSenhaNaoPreenchidos">O campo login e senha precisam ser preenchidos</string>
     <string name="warningLoginJaExistente">Este login já existe</string>
+    <string name="warningErroAoCarregarJogos">Erro ao carregar jogos, verifique sua internet</string>
 
     //Toolbar
     <string name="toolbarMain">Bem Vindo</string>

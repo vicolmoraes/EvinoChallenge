@@ -73,8 +73,8 @@ class TopGamesActivity : AppCompatActivity(),
     override fun error(resposta: String?) {
         Toast.makeText(
             baseContext,
-            resposta,
-            Toast.LENGTH_SHORT
+            R.string.warningErroAoCarregarJogos,
+            Toast.LENGTH_LONG
         ).show()
     }
 
@@ -89,7 +89,7 @@ class TopGamesActivity : AppCompatActivity(),
     private fun setRecycler(gamesList: ArrayList<Top?>) {
         rvResults = rv_top_games_lista
         rvResults.adapter =
-            GameAdapter(gamesList, this, { partItem: Top? -> partItemClicked(partItem) })
+            GameAdapter(gamesList, this, false, { partItem: Top? -> partItemClicked(partItem) })
     }
 
     private fun partItemClicked(game: Top?) {
