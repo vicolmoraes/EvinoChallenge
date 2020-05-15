@@ -19,7 +19,10 @@ class CreateDatabase internal constructor(context: Context?) :
                 + ID + " integer primary key autoincrement,"
                 + ID_USUARIO + " integer,"
                 + NOME_FAVORITO + " text,"
-                + IMAGEM_FAVORITA + " text"
+                + IMAGEM_FAVORITA + " text,"
+                + PREVIEW_FAVORITO + " text,"
+                + VISUALIZACOES_FAVORITO + " long,"
+                + CANAIS_FAVORITO + " long"
                 + " );")
         db.execSQL(sqlCategoria)
         db.execSQL(sqlSugestao)
@@ -47,9 +50,12 @@ class CreateDatabase internal constructor(context: Context?) :
         const val ID = "id"
         const val LOGIN = "login"
         const val SENHA = "senha"
-        const val VERSAO = 1
+        const val VERSAO = 3
         const val ID_USUARIO = "id_usuario"
         const val NOME_FAVORITO = "nome_favorito"
         const val IMAGEM_FAVORITA = "imagem_favorita"
+        const val VISUALIZACOES_FAVORITO = "visualizacoes_favorito"
+        const val CANAIS_FAVORITO = "canais_favorito"
+        const val PREVIEW_FAVORITO = "preview_favorito"
     }
 }

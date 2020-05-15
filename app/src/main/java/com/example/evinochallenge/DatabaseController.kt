@@ -20,14 +20,17 @@ class DatabaseController(var baseContext: Context) {
         contexto = baseContext
     }
 
-    fun insertFavorites(user: Int, name: String?, image: String?): String? {
+    fun insertFavorites(user: Int, top: Top?): String? {
         val valores: ContentValues
         var resultado: Long
         db = banco.writableDatabase
         valores = ContentValues()
         valores.put(CreateDatabase.ID_USUARIO, user.toLong())
-        valores.put(CreateDatabase.NOME_FAVORITO, name)
-        valores.put(CreateDatabase.IMAGEM_FAVORITA, image)
+        valores.put(CreateDatabase.NOME_FAVORITO, top?.game?.localized_name)
+        valores.put(CreateDatabase.IMAGEM_FAVORITA, top?.game?.box?.small)
+        valores.put(CreateDatabase.PREVIEW_FAVORITO, top?.game?.logo?.small)
+        valores.put(CreateDatabase.VISUALIZACOES_FAVORITO, top?.viewers)
+        valores.put(CreateDatabase.CANAIS_FAVORITO, top?.channels)
         try {
             resultado = db.update(
                 CreateDatabase.TABELA_FAVORITOS,
@@ -46,13 +49,6 @@ class DatabaseController(var baseContext: Context) {
 
     fun loadFavorites(user: Int): Cursor {
         val cursor: Cursor?
-        val campos = arrayOf(
-            CreateDatabase.ID,
-            CreateDatabase.ID_USUARIO,
-            CreateDatabase.NOME_FAVORITO,
-            CreateDatabase.IMAGEM_FAVORITA
-        )
-
         db = banco.readableDatabase
         if (!banco.doesDatabaseExist(contexto)) {
             banco.onCreate(db)
@@ -71,10 +67,16 @@ class DatabaseController(var baseContext: Context) {
         var cursor: Cursor = loadFavorites(user)
         if (cursor.moveToFirst()) {
             do {
-                val image = Image(
+                val box = Image(
                     "",
                     "",
                     small = cursor.getString(cursor.getColumnIndex(CreateDatabase.IMAGEM_FAVORITA)),
+                    template = ""
+                )
+                val logo = Image(
+                    "",
+                    "",
+                    small = cursor.getString(cursor.getColumnIndex(CreateDatabase.PREVIEW_FAVORITO)),
                     template = ""
                 )
                 val game = Game(
@@ -82,11 +84,17 @@ class DatabaseController(var baseContext: Context) {
                     name = "",
                     giantbomb_id = null,
                     locale = "",
-                    logo = null,
+                    logo = logo,
                     localized_name = cursor.getString(cursor.getColumnIndex(CreateDatabase.NOME_FAVORITO)),
-                    box = image
+                    box = box
                 )
-                lista.add(Top(channels = null, viewers = null, game = game))
+                lista.add(
+                    Top(
+                        channels = cursor.getLong(cursor.getColumnIndex(CreateDatabase.CANAIS_FAVORITO)),
+                        viewers = cursor.getLong(cursor.getColumnIndex(CreateDatabase.VISUALIZACOES_FAVORITO)),
+                        game = game
+                    )
+                )
 
             } while (cursor.moveToNext())
         }

@@ -4,6 +4,8 @@ import android.content.Context
 import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import androidx.cardview.widget.CardView
@@ -44,8 +46,11 @@ class GameAdapter(
         fun bind(part: Top?, clickListener: (Top?) -> Unit) {
 
             itemVieww.tv_item_game_name.text = part?.game?.localized_name
+            itemVieww.tv_item_game_canais_numero.text = part?.channels.toString()
+            itemVieww.tv_item_game_visualizacoes_numero.text = part?.viewers.toString()
 
             Picasso.get().load(part?.game?.box?.small).into(itemVieww.iv_item_game_box)
+            Picasso.get().load(part?.game?.logo?.small).into(itemVieww.iv_item_game_preview)
 
             val layout: CardView = itemVieww.cv_card
 
@@ -62,6 +67,14 @@ class GameAdapter(
                     itemVieww.ib_item_game_fav.setBackgroundResource(R.drawable.ic_fav_red)
                 }
                 clickListener(part)
+            }
+
+            itemVieww.bt_top_games_logout.setOnClickListener {
+                if (itemVieww.cl_item_game_detalhes.visibility == GONE) {
+                    itemVieww.cl_item_game_detalhes.visibility = VISIBLE
+                } else {
+                    itemVieww.cl_item_game_detalhes.visibility = GONE
+                }
             }
         }
 

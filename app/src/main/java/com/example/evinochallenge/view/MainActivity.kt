@@ -21,10 +21,10 @@ import java.io.Serializable
 class MainActivity : AppCompatActivity(),
     StandardActivity {
     override lateinit var interactor: Interactor
-    lateinit var etLogin: EditText
-    lateinit var etPass: EditText
-    lateinit var btEnter: Button
-    lateinit var crud: DatabaseController
+    private lateinit var etLogin: EditText
+    private lateinit var etPass: EditText
+    private lateinit var btEnter: Button
+    private lateinit var crud: DatabaseController
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)

@@ -14,20 +14,20 @@ import com.example.evinochallenge.entity.Top
 import com.example.evinochallenge.entity.User
 import com.example.evinochallenge.interactor.Interactor
 import com.example.evinochallenge.router.Router
-import kotlinx.android.synthetic.main.activity_search.*
+import kotlinx.android.synthetic.main.activity_top_games.*
 import java.io.Serializable
 
 
 class TopGamesActivity : AppCompatActivity(),
     StandardActivity {
-    lateinit var rvResults: RecyclerView
-    lateinit var crud: DatabaseController
-    lateinit var user: User
+    private lateinit var rvResults: RecyclerView
+    private lateinit var crud: DatabaseController
+    private lateinit var user: User
     override lateinit var interactor: Interactor
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_search)
+        setContentView(R.layout.activity_top_games)
 
         Router.INSTANCE.setCleanArchitecture(this)
         findViews()
@@ -57,6 +57,12 @@ class TopGamesActivity : AppCompatActivity(),
     }
 
     private fun findViews() {
+        bt_top_games_logout.setOnClickListener {
+            val intent = Intent(this, MainActivity::class.java)
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            intent.putExtra("EXIT", true);
+            startActivity(intent)
+        }
         crud = DatabaseController(this)
         crud.iniciar()
         interactor.fetch()
@@ -81,7 +87,7 @@ class TopGamesActivity : AppCompatActivity(),
     }
 
     private fun setRecycler(gamesList: ArrayList<Top?>) {
-        rvResults = rv_results_activity_search
+        rvResults = rv_top_games_lista
         rvResults.adapter =
             GameAdapter(gamesList, this, { partItem: Top? -> partItemClicked(partItem) })
     }
@@ -93,6 +99,6 @@ class TopGamesActivity : AppCompatActivity(),
             Toast.LENGTH_SHORT
         ).show()
 
-        crud.insertFavorites(user.id, game?.game?.localized_name, game?.game?.box?.small)
+        crud.insertFavorites(user.id, game)
     }
 }

@@ -3,10 +3,14 @@
     <string name="login">Login</string>
     <string name="senha">Senha</string>
     <string name="cadastrar">Cadastrar</string>
+    <string name="detalhes">Detalhes</string>
     <string name="entrar">Entrar</string>
     <string name="favoritar">Favoritar</string>
     <string name="favoritado">Favoritado</string>
     <string name="desfavoritado">Desfavoritado</string>
+    <string name="canais">Canais:</string>
+    <string name="visualizacoes">Visualizações:</string>
+    <string name="logout">Logout</string>
 
     // Warnings
     <string name="warningLoginSenhaErrados">Login ou senha errados</string>

@@ -1,5 +1,6 @@
 package com.example.evinochallenge.view
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -11,19 +12,19 @@ import com.example.evinochallenge.entity.Top
 import com.example.evinochallenge.entity.User
 import com.example.evinochallenge.interactor.Interactor
 import com.example.evinochallenge.router.Router
-import kotlinx.android.synthetic.main.activity_search.*
+import kotlinx.android.synthetic.main.activity_top_games.*
 
 
 class FavoriteActivity : AppCompatActivity(),
     StandardActivity {
-    lateinit var rvResults: RecyclerView
-    lateinit var crud: DatabaseController
-    lateinit var user: User
+    private lateinit var rvResults: RecyclerView
+    private lateinit var crud: DatabaseController
+    private lateinit var user: User
     override lateinit var interactor: Interactor
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_search)
+        setContentView(R.layout.activity_top_games)
 
         Router.INSTANCE.setCleanArchitecture(this)
         findViews()
@@ -37,9 +38,17 @@ class FavoriteActivity : AppCompatActivity(),
     }
 
     private fun findViews() {
+        bt_top_games_logout.setOnClickListener {
+            val intent = Intent(this, MainActivity::class.java)
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            intent.putExtra("EXIT", true);
+            startActivity(intent)
+        }
+
         crud = DatabaseController(this)
         crud.iniciar()
-        rvResults = rv_results_activity_search
+
+        rvResults = rv_top_games_lista
         if (intent.extras?.get("USER") != null)
             user = intent.extras?.get("USER") as User
         setRecycler(crud.loadFavoritesList(user.id))

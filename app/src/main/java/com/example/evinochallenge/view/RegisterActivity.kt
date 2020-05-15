@@ -17,10 +17,10 @@ import java.io.Serializable
 
 class RegisterActivity : AppCompatActivity(),
     StandardActivity {
-    lateinit var etLogin: EditText
-    lateinit var etPass: EditText
-    lateinit var btRegister: Button
-    lateinit var crud: DatabaseController
+    private lateinit var etLogin: EditText
+    private lateinit var etPass: EditText
+    private lateinit var btRegister: Button
+    private lateinit var crud: DatabaseController
     override lateinit var interactor: Interactor
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
