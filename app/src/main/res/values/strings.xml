@@ -19,7 +19,7 @@
     <string name="warningErroAoCarregarJogos">Erro ao carregar jogos, verifique sua internet</string>
 
     //Toolbar
-    <string name="toolbarMain">Bem Vindo</string>
+    <string name="toolbarMain">Twitch Top Games</string>
     <string name="toolbarRegister">Cadastrar Usuário</string>
     <string name="toolbarFavorite">&#160;Favoritos</string>
     <string name="toolbarTopGames">Adicione jogos aos favoritos</string>
